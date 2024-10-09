@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>屑屑使用</title>
+    <style>
+        body { 
+            background-image: url('{{ url_for('static', filename='image4.png') }}');
+            text-align: center; /* 内容居中对齐 */
+            color: yellow; /* 字体颜色为黄色 */
+        }
+        h1 {
+            font-size: 4em; /* 字体放大四倍 */
+            margin: 20px 0; /* 上下外边距 */
+        }
+        form {
+            margin: 20px; /* 表单的上下外边距 */
+        }
+        input[type="text"], 
+        input[type="password"] {
+            font-size: 2em; /* 字体放大四倍 */
+            width: 80%; /* 输入框宽度为80% */
+            padding: 10px; /* 添加一些内边距 */
+            margin: 10px 0; /* 上下外边距 */
+        }
+        button {
+            font-size: 2em; /* 字体放大四倍 */
+            padding: 10px 20px; /* 按钮内边距 */
+            margin: 10px; /* 上下外边距 */
+            border: none; /* 去掉边框 */
+            cursor: pointer; /* 鼠标悬停时显示为手指 */
+        }
+        .register-button {
+            background-color: green; /* 注册按钮为绿色 */
+        }
+        .login-button {
+            background-color: blue; /* 登录按钮为蓝色 */
+        }
+        #messages { 
+            max-height: 300px; 
+            overflow-y: auto; 
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+            padding: 10px; /* 内边距 */
+            margin-top: 20px; /* 上外边距 */
+        }
+        .message { margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>屑屑使用</h1>
+    <form method="POST">
+        <input type="text" name="username" placeholder="输入注册账号" required>
+        <input type="password" name="password" placeholder="输入注册密码" required>
+        <button type="submit" class="register-button">注册</button>
+    </form>
+    <p>
+        <button class="login-button"><a href="{{ url_for('login') }}" style="color: white; text-decoration: none;">登录</a></button>
+    </p>
+</body>
+</html>

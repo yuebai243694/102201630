@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>项目管理</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-image: url('{{ url_for('static', filename='image1.png') }}');
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: red;
+            font-size: 4em; /* 标题字体放大四倍 */
+            margin-top: 20px;
+        }
+
+        /* 搜索框区域的样式 */
+        div {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        #search-input {
+            font-size: 2em; /* 搜索框字体放大两倍 */
+            padding: 10px;
+            width: 400px; /* 搜索框宽度 */
+        }
+
+        #search-button {
+            font-size: 2em; /* 按钮字体放大两倍 */
+            padding: 10px 20px;
+        }
+
+        /* 项目列表的样式 */
+        #project-list {
+            display: flex;
+            flex-wrap: wrap; /* 允许项目换行排列 */
+            justify-content: center; /* 中心对齐项目 */
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .project-item {
+            background-color: white; /* 项目区域底色 */
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin: 10px;
+            padding: 20px;
+            width: 300px; /* 每个项目区域宽度 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-item strong {
+            font-size: 1.5em;
+        }
+
+        /* 创建项目和登出按钮的样式 */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .button {
+            font-size: 2em; /* 字体放大两倍 */
+            padding: 10px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        #create-project-button {
+            background-color: lightblue; /* 浅蓝色背景 */
+            color: white;
+            margin-right: 20px; /* 按钮间距 */
+        }
+
+        #logout-button {
+            background-color: lightgreen; /* 绿色背景 */
+            color: white;
+        }
+
+        /* 添加聊天链接样式 */
+        #chat-link {
+            position: absolute;
+            top: 20px; /* 离顶部的距离 */
+            right: 20px; /* 离右侧的距离 */
+            font-size: 2em; /* 字体放大两倍 */
+            color: green; /* 绿色字体 */
+            text-decoration: none; /* 去掉下划线 */
+        }
+
+        #chat-link:hover {
+            color: #45a049; /* 悬停时颜色变化 */
+        }
+
+        .message {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>欢迎，{{ current_user.username }}</h1>
+
+    <!-- 聊天链接 -->
+    <a href="{{ url_for('chat') }}" id="chat-link">聊天</a>
+
+    <!-- 创建项目和登出按钮 -->
+    <div class="button-container">
+        <a href="{{ url_for('create_project') }}" class="button" id="create-project-button">创建项目</a>
+        <a href="{{ url_for('logout') }}" class="button" id="logout-button">登出</a>
+    </div>
+    
+    <!-- 搜索功能 -->
+    <div>
+        <input type="text" id="search-input" placeholder="搜索项目名称">
+        <button id="search-button">确定</button>
+    </div>
+    
+    <ul id="project-list">
+        {% for project in projects %}
+            <li class="project-item">
+                <strong>{{ project.name }}</strong><br>
+                描述: {{ project.description }}<br>
+                截止日期: {{ project.due_date }}<br>
+            </li>
+        {% endfor %}
+    </ul>
+    
+    <script>
+        $(document).ready(function() {
+            $('#search-button').click(function() {
+                let searchTerm = $('#search-input').val();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("search") }}',
+                    data: { search_term: searchTerm },
+                    success: function(response) {
+                        $('#project-list').empty(); // 清空项目列表
+                        response.projects.forEach(function(project) {
+                            $('#project-list').append(`
+                                <li class="project-item">
+                                    <strong>${project.name}</strong><br>
+                                    描述: ${project.description}<br>
+                                    截止日期: ${project.due_date}<br>
+                                </li>
+                            `);
+                        });
+                    },
+                    error: function() {
+                        alert('搜索失败，请重试。');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

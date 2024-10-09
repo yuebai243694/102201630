@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>屑屑使用</title>
+    <style>
+        body { 
+            background-image: url('{{ url_for('static', filename='image4.png') }}');
+            text-align: center;
+            color: yellow;
+        }
+        h1 {
+            font-size: 4em;
+            margin: 20px 0;
+        }
+        form {
+            margin: 20px;
+        }
+        input[type="text"], 
+        input[type="password"] {
+            font-size: 2em;
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button {
+            font-size: 2em;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .register-button {
+            background-color: green;
+        }
+        .login-button {
+            background-color: blue;
+        }
+    </style>
+    <script>
+        // 当页面加载完成时，检查是否有 flash 消息，如果有则弹窗显示
+        window.onload = function() {
+            const messages = {{ get_flashed_messages()|tojson }};
+            if (messages.length > 0) {
+                alert(messages.join('\\n'));  // 显示所有 flash 消息
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1>屑屑使用</h1>
+    <form method="POST">
+        <input type="text" name="username" placeholder="输入注册账号" required>
+        <input type="password" name="password" placeholder="输入注册密码" required>
+        <button type="submit" class="register-button">注册</button>
+    </form>
+    <p>
+        <button class="login-button"><a href="{{ url_for('login') }}" style="color: white; text-decoration: none;">登录</a></button>
+    </p>
+</body>
+</html>

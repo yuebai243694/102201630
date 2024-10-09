@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <style>
+        body { 
+            background-image: url('{{ url_for('static', filename='image2.png') }}');
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: yellow; /* 设置标题颜色为黄色 */
+            font-size: 4em; /* 字体大小为原来的4倍 */
+            text-align: center; /* 居中对齐 */
+            margin-bottom: 20px; /* 底部间距 */
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* 居中对齐表单内容 */
+        }
+        input[type="text"], input[type="password"] {
+            width: 300px; /* 设置输入框宽度 */
+            padding: 10px; /* 内边距 */
+            margin: 10px 0; /* 上下间距 */
+            font-size: 2em; /* 字体大小为原来的2倍 */
+            border: 2px solid #ccc; /* 边框 */
+            border-radius: 5px; /* 圆角 */
+        }
+        button {
+            padding: 10px 20px; /* 按钮内边距 */
+            font-size: 2em; /* 字体大小为原来的2倍 */
+            background-color: #4CAF50; /* 登录按钮背景色 */
+            color: white; /* 登录按钮文字颜色 */
+            border: none; /* 去掉边框 */
+            border-radius: 5px; /* 圆角 */
+            cursor: pointer; /* 鼠标指针样式 */
+            margin-top: 10px; /* 上间距 */
+        }
+        button:hover {
+            background-color: #45a049; /* 悬停时按钮颜色 */
+        }
+        .register-container {
+            display: flex; /* 使用flexbox */
+            align-items: center; /* 垂直居中对齐 */
+            margin-top: 20px; /* 上间距 */
+        }
+        .register-link {
+            font-size: 2em; /* 字体大小为原来的2倍 */
+            color: red; /* 设置字体颜色为红色 */
+            margin-right: 10px; /* 右侧间距 */
+        }
+        .register-button {
+            padding: 10px 20px; /* 注册按钮内边距 */
+            font-size: 2em; /* 字体大小为原来的2倍 */
+            background-color: blue; /* 注册按钮颜色 */
+            color: white; /* 注册按钮文字颜色 */
+            border: none; /* 去掉边框 */
+            border-radius: 5px; /* 圆角 */
+            cursor: pointer; /* 鼠标指针样式 */
+        }
+        .register-button:hover {
+            background-color: #0056b3; /* 悬停时注册按钮颜色 */
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome</h1>
+    <form method="POST">
+        <input type="text" name="username" placeholder="用户名" required>
+        <input type="password" name="password" placeholder="密码" required>
+        <button type="submit">登录</button>
+    </form>
+    <div class="register-container">
+        <p class="register-link">还没有账号？</p>
+        <button class="register-button" onclick="location.href='{{ url_for('register') }}'">注册</button>
+    </div>
+</body>
+</html>
